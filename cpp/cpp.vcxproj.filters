@@ -21,9 +21,27 @@
     <ClCompile Include="aes.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="des.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base64.hpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base64.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file_utils.hpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file_utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="des.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
