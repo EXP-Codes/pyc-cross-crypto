@@ -1,20 +1,81 @@
-﻿// cpp.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
+﻿/***************************************************\
+ * -*- coding: GBK -*-
+ * @Author : EXP
+ * @Time   : 2022/11/15 23:56
+ * -----------------------------------------------
+ * DES 加解密工具
+ * 算法 ECB， 填充模式 PKCS5
+ * -----------------------------------------------
+ * 参考文档:
+ *  https://blog.csdn.net/suhiymof/article/details/92796811
+ *  https://blog.csdn.net/Yonggie/article/details/100592532
+\***************************************************/
 
+#include "aes_crypto.cpp"
+#include "des_crypto.h"
+#include "file_utils.h"
 #include <iostream>
+using namespace std;
+
+
+void test_des_cache(DESCrypto* des)
+{
+    string plaintext = "Starting D:中文a  \n ro 随缘仙境";
+
+    string ciphertext = des->encrypt(plaintext);
+    cout << "ciphertext: " << ciphertext << endl;
+
+    plaintext = des->decrypt(ciphertext);
+    cout << "plaintext: " << plaintext << endl;
+
+    cout << "Finish [test_cache]" << endl;
+}
+
+
+void test_des_file(DESCrypto* des, string filepath)
+{
+    char* filedata = file_read(filepath);
+    string ciphertext = des->encrypt(filedata);
+    file_write("./out/ciphertext.nro", ciphertext);
+
+    string plaintext = des->decrypt(ciphertext);
+    file_write("./out/plaintext.txt", plaintext);
+
+    cout << "Finish [test_file]" << endl;
+}
+
+
+void test_des() {
+    string key = "EXPROkey";
+    DESCrypto* des = new DESCrypto(key);
+
+    test_des_cache(des);
+
+    string filepath = "./out/OX.txt";
+    test_des_file(des, filepath);
+}
+
+
+
+void test_aes() {
+    string key = "EXPROkey";
+    string iv = "EXP-RO-iv";
+    AESCrypto* aes = new AESCrypto(key, iv);
+
+    string plaintext = "Starting 中文 asas";
+    string ciphertext = aes->encrypt(plaintext);
+    cout << "ciphertext: " << ciphertext << endl;
+
+    plaintext = aes->decrypt(ciphertext);
+    cout << "plaintext: " << plaintext << endl;
+
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    // test_des();
+
+    test_aes();
+    return 0;
 }
 
-// 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
-// 调试程序: F5 或调试 >“开始调试”菜单
-
-// 入门使用技巧: 
-//   1. 使用解决方案资源管理器窗口添加/管理文件
-//   2. 使用团队资源管理器窗口连接到源代码管理
-//   3. 使用输出窗口查看生成输出和其他消息
-//   4. 使用错误列表窗口查看错误
-//   5. 转到“项目”>“添加新项”以创建新的代码文件，或转到“项目”>“添加现有项”以将现有代码文件添加到项目
-//   6. 将来，若要再次打开此项目，请转到“文件”>“打开”>“项目”并选择 .sln 文件
