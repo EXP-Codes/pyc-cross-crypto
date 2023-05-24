@@ -22,10 +22,9 @@ class AESCrypto :
         self.encoding = encoding
         self.ISO_8859_1 = "ISO-8859-1"
 
-        # 使用 sha256 处理 key 和 IV
-        # 使其满足 AES 密钥长度要求（AES 仅接受 16、24、32 字节长度的密钥）
-        self.key = hashlib.sha256(key.encode(self.ISO_8859_1)).digest()
-        self.iv = hashlib.sha256(iv.encode(self.ISO_8859_1)).digest()[:16]
+        # 使用 sha256 处理 key 和 IV，使其满足 AES 密钥长度要求
+        self.key = hashlib.sha256(key.encode(self.ISO_8859_1)).digest()     # key 仅接受 16、24、32 字节长度
+        self.iv = hashlib.sha256(iv.encode(self.ISO_8859_1)).digest()[:16]  # iv 仅接受 16 字节长度
 
 
     def encrypt(self, plaintext: str) -> str :

@@ -20,6 +20,7 @@ from aes import AESCrypto
 from utils import *
 from color_log.clog import log
 
+TESTED_PLAINTEXT = "特殊字符 $%^!@# 数字 123890 中文\tOK"
 TESTED_FILEPATH = './test/test_crypto.py'
 TESTED_ENCODING = judge_encoding(TESTED_FILEPATH)   # 被测文件原本的/解密后的编码
 CIPHERTEXT_ENCODING = "ISO-8859-1"                  # 加密后的文件编码（base64 统一用 ISO-8859-1 即可）
@@ -27,7 +28,7 @@ OUT_DIR = './out'
 
 
 def main() :
-    key = "EXPROkey"
+    key = "EXP-BLOG"
     des = DESCrypto(key, encoding=TESTED_ENCODING)
     test_cache(des)
     test_file(des)
@@ -42,7 +43,7 @@ def test_cache(algorithm) :
     name = "DES" if isinstance(algorithm, DESCrypto) else "AES"
     log.warn(f"[{name}] 测试内存字符串加解密 ...")
 
-    plaintext = "Starting 中文 asas"
+    plaintext = TESTED_PLAINTEXT
     log.info(f"[{name}] 明文: {plaintext}")
 
     ciphertext = algorithm.encrypt(plaintext)

@@ -46,7 +46,7 @@ void test_des_file(DESCrypto* des, string filepath)
 
 
 void test_des() {
-    string key = "EXPROkey";
+    string key = "EXP-BLOG";
     DESCrypto* des = new DESCrypto(key);
 
     test_des_cache(des);
@@ -58,7 +58,7 @@ void test_des() {
 
 
 void test_aes() {
-    string key = "EXPROkey";
+    string key = "EXP-BLOG";
     string iv = "https://exp-blog.com";
     AESCrypto* aes = new AESCrypto(key, iv);
 
