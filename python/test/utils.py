@@ -5,8 +5,6 @@
 # -----------------------------------------------
 
 import chardet
-from common.settings import *
-
 
 def judge_encoding(filepath) :
     '''
@@ -14,17 +12,8 @@ def judge_encoding(filepath) :
     :params: filepath 目标文件
     :return: 文件编码
     '''
-    encoding = ENCODING
+    encoding = "UTF-8"
     with open(filepath, 'rb') as file :
         data = file.read()
         encoding = chardet.detect(data)['encoding']
     return encoding
-
-
-def concat_path(paths) :
-    '''
-    拼接文件路径
-    :params: paths 部分路径数组
-    :return: 文件路径
-    '''
-    return '/'.join(paths)

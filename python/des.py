@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author : EXP
-# @Time   : 2022/11/15 23:56
+# @Time   : 2023/05/24 23:56
 # -----------------------------------------------
 # DES 加解密工具
-# 算法 ECB， 填充模式 PKCS5
+# 算法 ECB（无 IV）， 填充模式 PKCS5
 # -----------------------------------------------
 
 import base64
 from pyDes import des, PAD_PKCS5, ECB
-PLAINTEXT_ENCODING = 'GBK'
+PLAINTEXT_ENCODING = 'UTF-8'
 
 
 class DESCrypto :

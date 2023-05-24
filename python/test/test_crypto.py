@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author : EXP
-# @Time   : 2022/11/15 23:56
+# @Time   : 2023/05/24 23:56
 # -----------------------------------------------
 # DES 加解密工具测试
+#   cd python
+#   python test/test_crypto.py
 # -----------------------------------------------
 
 # ----------------------------------------------------------------------
@@ -13,23 +15,27 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 # ----------------------------------------------------------------------
 
+from des import DESCrypto
+from aes import AESCrypto
+from utils import *
 from color_log.clog import log
-from common.des import DESCrypto
-from common.aes import AESCrypto
-NPC_ENCODING = "GBK"
-CIPHERTEXT_ENCODING = "UTF-8"
+
+TESTED_FILEPATH = './test/test_crypto.py'
+TESTED_ENCODING = judge_encoding(TESTED_FILEPATH)   # 被测文件原本的/解密后的编码
+CIPHERTEXT_ENCODING = "ISO-8859-1"                  # 加密后的文件编码（base64 统一用 ISO-8859-1 即可）
+OUT_DIR = './out'
 
 
 def main() :
     key = "EXPROkey"
-    des = DESCrypto(key, encoding=NPC_ENCODING)
-    # test_cache(des)
-    # test_file(des)
+    des = DESCrypto(key, encoding=TESTED_ENCODING)
+    test_cache(des)
+    test_file(des)
 
-    iv = "EXP-RO-iv"
-    aes = AESCrypto(key, iv=iv, encoding=NPC_ENCODING)
+    iv = "https://exp-blog.com"
+    aes = AESCrypto(key, iv=iv, encoding=TESTED_ENCODING)
     test_cache(aes)
-    # test_file(aes)
+    test_file(aes)
 
 
 def test_cache(algorithm) :
@@ -52,26 +58,28 @@ def test_file(algorithm) :
     name = "DES" if isinstance(algorithm, DESCrypto) else "AES"
 
     log.warn(f"[{name}] 测试文件字符串加解密 ...")
-    npcpath = './covers/npc/merchants/refine.txt'
-    if not os.path.exists(npcpath) :
+    tested_path = TESTED_FILEPATH
+    if not os.path.exists(tested_path) :
         os._exit(1)
+    elif not os.path.exists(OUT_DIR) :
+        os.makedirs(OUT_DIR)
 
     plaintext = ''
-    with open(npcpath, 'r', encoding=NPC_ENCODING) as file :
+    with open(tested_path, 'r', encoding=TESTED_ENCODING) as file :
         plaintext = file.read()
-    log.info(f"[{name}] 已读取 NPC 脚本（{NPC_ENCODING}）: {npcpath}")
+    log.info(f"[{name}] 已读取被测文件（{TESTED_ENCODING}）: {tested_path}")
 
-    cipherfile = f"./out/{name}_ciphertext.nro"
+    cipherfile = f"{OUT_DIR}/{name}_ciphertext.cro"
     ciphertext = algorithm.encrypt(plaintext)
     with open(cipherfile, 'w+', encoding=CIPHERTEXT_ENCODING) as file :
         file.write(ciphertext)
     log.info(f"[{name}] 已加密（{CIPHERTEXT_ENCODING}）: {cipherfile}")
 
-    plainfile = f"./out/{name}_plaintext.txt"
+    plainfile = f"{OUT_DIR}/{name}_plaintext.txt"
     plaintext = algorithm.decrypt(ciphertext)
-    with open(plainfile, 'w+', encoding=NPC_ENCODING) as file :
+    with open(plainfile, 'w+', encoding=TESTED_ENCODING) as file :
         file.write(plaintext)
-    log.info(f"[{name}] 已解密（{NPC_ENCODING}）: {plainfile}")
+    log.info(f"[{name}] 已解密（{TESTED_ENCODING}）: {plainfile}")
 
     log.warn(f"[{name}] 测试完成")
     

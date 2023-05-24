@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Author : EXP
-# @Time   : 2022/11/15 23:56
+# @Time   : 2023/05/24 23:56
 # -----------------------------------------------
 # AES 加解密工具
-# 算法 CBC， 填充模式 PKCS7
+# 算法 CBC（含 IV）， 填充模式 PKCS7
 # -----------------------------------------------
 
 import hashlib
 import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
-PLAINTEXT_ENCODING = 'GBK'
-AES_IV = "EXP-RO-iv"
+PLAINTEXT_ENCODING = 'UTF-8'
+AES_IV = "https://exp-blog.com"
 
 
 class AESCrypto :

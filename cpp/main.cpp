@@ -59,7 +59,7 @@ void test_des() {
 
 void test_aes() {
     string key = "EXPROkey";
-    string iv = "EXP-RO-iv";
+    string iv = "https://exp-blog.com";
     AESCrypto* aes = new AESCrypto(key, iv);
 
     string plaintext = "Starting 中文 asas";
