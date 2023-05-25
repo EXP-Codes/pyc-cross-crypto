@@ -1,24 +1,20 @@
 #include "base64.hpp"
 #include "des_crypto.hpp"
-#include <des.h>
 #include <string>
 #include <iostream>
 #include <sstream>
-using namespace std;
-using namespace CryptoPP;
+#include "filters.h"
 
-DESCrypto::DESCrypto(string key)
+DESCrypto::DESCrypto(std::string key)
 {
+    using namespace CryptoPP;
     SHA256 hash;
-    string digest;
-
+    std::string digest;
     StringSource s(key, true, new HashFilter(hash, new StringSink(digest)));
-
     this->desKey = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
 }
 
-
-char* DESCrypto::padding_PKCS5(string plaintext)
+char* DESCrypto::padding_PKCS5(std::string plaintext)
 {
     using namespace CryptoPP;
 
@@ -35,8 +31,7 @@ char* DESCrypto::padding_PKCS5(string plaintext)
     return pad_plain_bytes;
 }
 
-
-string DESCrypto::encrypt(string plaintext)
+std::string DESCrypto::encrypt(std::string plaintext)
 {
     using namespace CryptoPP;
 
@@ -46,7 +41,7 @@ string DESCrypto::encrypt(string plaintext)
     unsigned char in_cache[DES::BLOCKSIZE];
     unsigned char out_cache[DES::BLOCKSIZE];
 
-    char* plain_bytes = padding_PKCS5(plaintext);           // ??? PKCS5 ??????
+    char* plain_bytes = padding_PKCS5(plaintext);
     int plaintext_len = plaintext.size();
     int pLen = plaintext_len / DES::BLOCKSIZE + 1;
     int cLen = pLen * DES::BLOCKSIZE;
@@ -60,34 +55,34 @@ string DESCrypto::encrypt(string plaintext)
         memcpy(in_cache, plain_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
 
         DESEncryption des_encryption;
-        des_encryption.SetKey(key, DES::KEYLENGTH);         // ???????
-        des_encryption.ProcessBlock(in_cache, out_cache);   // ????
+        des_encryption.SetKey(key, DES::KEYLENGTH);
+        des_encryption.ProcessBlock(in_cache, out_cache);
         memcpy(cipher_bytes + (i * DES::BLOCKSIZE), out_cache, DES::BLOCKSIZE);
     }
 
-    // base64 ????
-    string ciphertext = to_base64(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen);
+    // Base64 encoding
+    std::string ciphertext = to_base64(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen);
     return ciphertext;
 }
 
-string DESCrypto::unpadding_PKCS5(vector<unsigned char>& plain_bytes)
+std::string DESCrypto::unpadding_PKCS5(std::vector<unsigned char>& plain_bytes)
 {
     int pad_amount = plain_bytes[plain_bytes.size() - 1];
-    string plaintext;
+    std::string plaintext;
     plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
     return plaintext;
 }
 
-string DESCrypto::decrypt(string ciphertext)
+std::string DESCrypto::decrypt(std::string ciphertext)
 {
     using namespace CryptoPP;
 
     unsigned char key[DES::DEFAULT_KEYLENGTH];
     memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
 
-    ciphertext = un_base64(ciphertext);  // base64 解码
+    ciphertext = un_base64(ciphertext);  // Base64 decoding
 
-    vector<unsigned char> plain_bytes;
+    std::vector<unsigned char> plain_bytes;
     unsigned char in_cache[DES::BLOCKSIZE];
     unsigned char out_cache[DES::BLOCKSIZE];
 
@@ -102,15 +97,15 @@ string DESCrypto::decrypt(string ciphertext)
         memcpy(in_cache, cipher_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
 
         DESDecryption des_decryption;
-        des_decryption.SetKey(key, DES::KEYLENGTH);  // 设置密钥
-        des_decryption.ProcessBlock(in_cache, out_cache);   // 解密
+        des_decryption.SetKey(key, DES::KEYLENGTH);
+        des_decryption.ProcessBlock(in_cache, out_cache);
         for (int k = 0; k < DES::BLOCKSIZE; k++)
         {
             plain_bytes.push_back(out_cache[k]);
         }
     }
 
-    // 调用新的 unpadding_PKCS5 函数
-    string plaintext = unpadding_PKCS5(plain_bytes);
+    std::string plaintext = unpadding_PKCS5(plain_bytes);
     return plaintext;
 }
+

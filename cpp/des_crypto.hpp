@@ -1,56 +1,52 @@
-#ifndef DES_ECB_H
-#define DES_ECB_H
+#ifndef DES_CRYPTO_HPP
+#define DES_CRYPTO_HPP
+
 #include <string>
-#include "hex.h"
-#include "filters.h"
-#include "des.h"
-#include "osrng.h"
-#include <sstream>
-#include <iomanip>
-#include <string>
+#include <vector>
+#include <des.h>
 #include <sha.h>
-#include <base64.h>
-#include <aes.h>
-#include <modes.h>
-using namespace std;
 
 
-class DESCrypto
-{
-public:
-
-	/*
-	 * ???? DES ????
-	 * @param key ?????????8 ????
-	 */
-	DESCrypto(string key);
-
-	/*
-	 * DES ????
-	 * @param plaintext ????
-	 * @return ?????base64 ????
-	 */
-	string encrypt(string plaintext);
-
-	/*
-	 * DES ????
-	 * @param ciphertext ?????base64 ????
-	 * @return ????
-	 */
-	string decrypt(string ciphertext);
+class DESCrypto {
 
 private:
-	string desKey;	// ?????????8 ????
+    /**
+    * @brief 对明文进行 PKCS5 填充
+    * @param plaintext 需要填充的明文
+    * @return 填充后的明文
+    */
+    char* padding_PKCS5(std::string plaintext);
 
-	/*
-	 * DES ?????: PKCS5
-	 * @param plaintext ????
-	 * @return ??????????
-	 */
-	char* padding_PKCS5(string plaintext);
+    /**
+    * @brief 对密文进行 PKCS5 解填充
+    * @param plain_bytes 需要解填充的密文
+    * @return 解填充后的明文
+    */
+    std::string unpadding_PKCS5(std::vector<unsigned char>& plain_bytes);
 
-	string unpadding_PKCS5(vector<unsigned char>& plain_bytes);
+    std::string desKey; // 用于加密和解密的密钥
+
+public:
+    /**
+    * @brief 构造函数
+    * @param key 用于加密和解密的秘钥
+    */
+    DESCrypto(std::string key);
+
+    /**
+    * @brief 对明文进行加密
+    * @param plaintext 明文
+    * @return 加密后的密文
+    */
+    std::string encrypt(std::string plaintext);
+
+    /**
+    * @brief 对密文进行解密
+    * @param ciphertext 密文
+    * @return 解密后的明文
+    */
+    std::string decrypt(std::string ciphertext);
+
 };
 
-
-#endif
+#endif // DES_CRYPTO_HPP
