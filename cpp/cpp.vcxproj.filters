@@ -24,12 +24,6 @@
     <ClCompile Include="des_crypto.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="base64.hpp">
-      <Filter>头文件</Filter>
-    </ClCompile>
-    <ClCompile Include="base64.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="file_utils.hpp">
       <Filter>头文件</Filter>
     </ClCompile>

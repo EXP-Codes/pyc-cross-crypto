@@ -3,12 +3,7 @@
  * @Author : EXP
  * @Time   : 2022/11/15 23:56
  * -----------------------------------------------
- * DES 加解密工具
- * 算法 ECB， 填充模式 PKCS5
- * -----------------------------------------------
- * 参考文档:
- *  https://blog.csdn.net/suhiymof/article/details/92796811
- *  https://blog.csdn.net/Yonggie/article/details/100592532
+ * AES/DES 跨平台加解密测试
 \***************************************************/
 
 #include "aes_crypto.hpp"

@@ -132,8 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aes_crypto.cpp" />
-    <ClCompile Include="base64.cpp" />
-    <ClCompile Include="base64.hpp" />
     <ClCompile Include="des_crypto.cpp" />
     <ClCompile Include="file_utils.cpp" />
     <ClCompile Include="file_utils.hpp" />

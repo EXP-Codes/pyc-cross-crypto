@@ -1,9 +1,13 @@
-#include "base64.hpp"
+/***************************************************\
+ * -*- coding: GBK -*-
+ * @Author : EXP
+ * @Time   : 2022/11/15 23:56
+ * -----------------------------------------------
+ * DES 加解密工具
+ * 算法 ECB， 填充模式 PKCS5
+\***************************************************/
 #include "des_crypto.hpp"
-#include <string>
-#include <iostream>
-#include <sstream>
-#include "filters.h"
+
 
 DESCrypto::DESCrypto(std::string key)
 {
@@ -61,7 +65,9 @@ std::string DESCrypto::encrypt(std::string plaintext)
     }
 
     // Base64 encoding
-    std::string ciphertext = to_base64(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen);
+    std::string ciphertext;
+    StringSource ss(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen,
+        true, new Base64Encoder(new StringSink(ciphertext)));
     return ciphertext;
 }
 
@@ -80,7 +86,10 @@ std::string DESCrypto::decrypt(std::string ciphertext)
     unsigned char key[DES::DEFAULT_KEYLENGTH];
     memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
 
-    ciphertext = un_base64(ciphertext);  // Base64 decoding
+    // Base64 decoding
+    std::string decoded;
+    StringSource ss(ciphertext, true, new Base64Decoder(new StringSink(decoded)));
+    ciphertext = decoded;
 
     std::vector<unsigned char> plain_bytes;
     unsigned char in_cache[DES::BLOCKSIZE];
