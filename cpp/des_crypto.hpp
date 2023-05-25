@@ -48,6 +48,8 @@ private:
 	 * @return ??????????
 	 */
 	char* padding_PKCS5(string plaintext);
+
+	string unpadding_PKCS5(vector<unsigned char>& plain_bytes);
 };
 
 

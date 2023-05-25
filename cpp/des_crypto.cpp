@@ -70,6 +70,13 @@ string DESCrypto::encrypt(string plaintext)
     return ciphertext;
 }
 
+string DESCrypto::unpadding_PKCS5(vector<unsigned char>& plain_bytes)
+{
+    int pad_amount = plain_bytes[plain_bytes.size() - 1];
+    string plaintext;
+    plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
+    return plaintext;
+}
 
 string DESCrypto::decrypt(string ciphertext)
 {
@@ -78,7 +85,7 @@ string DESCrypto::decrypt(string ciphertext)
     unsigned char key[DES::DEFAULT_KEYLENGTH];
     memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
 
-    ciphertext = un_base64(ciphertext);                     // base64 ????
+    ciphertext = un_base64(ciphertext);  // base64 解码
 
     vector<unsigned char> plain_bytes;
     unsigned char in_cache[DES::BLOCKSIZE];
@@ -95,18 +102,15 @@ string DESCrypto::decrypt(string ciphertext)
         memcpy(in_cache, cipher_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
 
         DESDecryption des_decryption;
-        des_decryption.SetKey(key, DES::KEYLENGTH);         // ???????
-        des_decryption.ProcessBlock(in_cache, out_cache);   // ????
+        des_decryption.SetKey(key, DES::KEYLENGTH);  // 设置密钥
+        des_decryption.ProcessBlock(in_cache, out_cache);   // 解密
         for (int k = 0; k < DES::BLOCKSIZE; k++)
         {
             plain_bytes.push_back(out_cache[k]);
         }
     }
 
-    // ???????????????
-    int pad_amount = plain_bytes[ciphertext_len - 1];
-    string plaintext;
-    plaintext.clear();
-    plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
+    // 调用新的 unpadding_PKCS5 函数
+    string plaintext = unpadding_PKCS5(plain_bytes);
     return plaintext;
 }
