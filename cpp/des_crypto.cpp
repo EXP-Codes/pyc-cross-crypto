@@ -9,17 +9,15 @@
 #include "des_crypto.hpp"
 
 
-DESCrypto::DESCrypto(std::string key)
-{
+DESCrypto::DESCrypto(std::string key) {
     using namespace CryptoPP;
     SHA256 hash;
     std::string digest;
     StringSource s(key, true, new HashFilter(hash, new StringSink(digest)));
-    this->desKey = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
+    this->key = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
 }
 
-char* DESCrypto::padding_PKCS5(std::string plaintext)
-{
+char* DESCrypto::padding_PKCS5(std::string plaintext) {
     using namespace CryptoPP;
 
     int plaintext_len = plaintext.size();
@@ -35,12 +33,11 @@ char* DESCrypto::padding_PKCS5(std::string plaintext)
     return pad_plain_bytes;
 }
 
-std::string DESCrypto::encrypt(std::string plaintext)
-{
+std::string DESCrypto::encrypt(std::string plaintext) {
     using namespace CryptoPP;
 
     unsigned char key[DES::DEFAULT_KEYLENGTH];
-    memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
+    memcpy(key, this->key.c_str(), DES::BLOCKSIZE);
 
     unsigned char in_cache[DES::BLOCKSIZE];
     unsigned char out_cache[DES::BLOCKSIZE];
@@ -71,20 +68,18 @@ std::string DESCrypto::encrypt(std::string plaintext)
     return ciphertext;
 }
 
-std::string DESCrypto::unpadding_PKCS5(std::vector<unsigned char>& plain_bytes)
-{
+std::string DESCrypto::unpadding_PKCS5(std::vector<unsigned char>& plain_bytes) {
     int pad_amount = plain_bytes[plain_bytes.size() - 1];
     std::string plaintext;
     plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
     return plaintext;
 }
 
-std::string DESCrypto::decrypt(std::string ciphertext)
-{
+std::string DESCrypto::decrypt(std::string ciphertext) {
     using namespace CryptoPP;
 
     unsigned char key[DES::DEFAULT_KEYLENGTH];
-    memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
+    memcpy(key, this->key.c_str(), DES::BLOCKSIZE);
 
     // Base64 decoding
     std::string decoded;

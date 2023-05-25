@@ -15,6 +15,9 @@
 class DESCrypto {
 
 private:
+
+    std::string key; // 加密密钥
+
     /**
      * @brief 对明文进行 PKCS5 填充
      * @param plaintext 需要填充的明文
@@ -28,8 +31,6 @@ private:
      * @return 解填充后的明文
      */
     std::string unpadding_PKCS5(std::vector<unsigned char>& plain_bytes);
-
-    std::string desKey; // 用于加密和解密的密钥
 
 public:
     /**

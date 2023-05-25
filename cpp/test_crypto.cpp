@@ -19,92 +19,60 @@ const string CIPHERTEXT_ENCODING = "ISO-8859-1";                        // 加�
 const string OUT_DIR = "./out";
 
 
-void test_cache(DESCrypto* des);
-void test_file(DESCrypto* des);
-void test_cache(AESCrypto* aes);
-void test_file(AESCrypto* aes);
+template <typename Crypto>
+void test_cache(Crypto* crypto, string type);
 
+template <typename Crypto>
+void test_file(Crypto* crypto, string type);
 
 
 int main() {
     string key = "EXP-BLOG";
     DESCrypto* des = new DESCrypto(key);
-    test_cache(des);
-    test_file(des);
+    test_cache(des, "DES");
+    test_file(des, "DES");
 
     string iv = "https://exp-blog.com";
     AESCrypto* aes = new AESCrypto(key, iv);
-    test_cache(aes);
-    test_file(aes);
+    test_cache(aes, "AES");
+    test_file(aes, "AES");
     return 0;
 }
 
 
-void test_cache(DESCrypto* des) {
-    cout << "[DES] 测试内存字符串加解密 ..." << endl;
+template <typename Crypto>
+void test_cache(Crypto* crypto, string type) {
+    cout << "[" << type << "] 测试内存字符串加解密 ..." << endl;
 
     string plaintext = TESTED_PLAINTEXT;
-    cout << "[DES] 明文: " << plaintext << endl;
+    cout << "[" << type << "] 明文: " << plaintext << endl;
 
-    string ciphertext = des->encrypt(plaintext);
-    cout << "[DES] 密文: " << ciphertext << endl;
+    string ciphertext = crypto->encrypt(plaintext);
+    cout << "[" << type << "] 密文: " << ciphertext << endl;
 
-    plaintext = des->decrypt(ciphertext);
-    cout << "[DES] 测试完成" << endl;
+    plaintext = crypto->decrypt(ciphertext);
+    cout << "[" << type << "] 解密: " << plaintext << endl;
+    cout << "[" << type << "] 测试完成" << endl << endl;
 }
 
 
-void test_file(DESCrypto* des) {
-    cout << "[DES] 测试文件字符串加解密 ..." << endl;
+template <typename Crypto>
+void test_file(Crypto* crypto, string type) {
+    cout << "[" << type << "] 测试文件字符串加解密 ..." << endl;
 
     char* filedata = file_read(TESTED_FILEPATH);
     string plaintext(filedata);
-    cout << "[DES] 已读取被测文件: " << TESTED_FILEPATH << endl;
+    cout << "[" << type << "] 已读取被测文件: " << TESTED_FILEPATH << endl;
 
-    string cipherfile = OUT_DIR + "/DES_ciphertext.cro";
-    string ciphertext = des->encrypt(plaintext);
+    string cipherfile = OUT_DIR + "/" + type + "_ciphertext.cro";
+    string ciphertext = crypto->encrypt(plaintext);
     file_write(cipherfile, ciphertext);
-    cout << "[DES] 已加密: " << cipherfile << endl;
+    cout << "[" << type << "] 已加密: " << cipherfile << endl;
 
-    string plainfile = OUT_DIR + "/DES_plaintext.txt";
-    plaintext = des->decrypt(ciphertext);
+    string plainfile = OUT_DIR + "/" + type + "_plaintext.txt";
+    plaintext = crypto->decrypt(ciphertext);
     file_write(plainfile, plaintext);
-    cout << "[DES] 已加密: " << plainfile << endl;
+    cout << "[" << type << "] 已解密: " << plainfile << endl;
 
-    cout << "[DES] 测试完成" << endl;
-}
-
-
-void test_cache(AESCrypto* aes) {
-    cout << "[AES] 测试内存字符串加解密 ..." << endl;
-
-    string plaintext = TESTED_PLAINTEXT;
-    cout << "[AES] 明文: " << plaintext << endl;
-
-    string ciphertext = aes->encrypt(plaintext);
-    cout << "[AES] 密文: " << ciphertext << endl;
-
-    plaintext = aes->decrypt(ciphertext);
-    cout << "[AES] 测试完成" << endl;
-}
-
-
-void test_file(AESCrypto* aes) {
-    cout << "[AES] 测试文件字符串加解密 ..." << endl;
-
-    char* filedata = file_read(TESTED_FILEPATH);
-    string plaintext(filedata);
-    cout << "[AES] 已读取被测文件: " << TESTED_FILEPATH << endl;
-
-    string cipherfile = OUT_DIR + "/AES_ciphertext.cro";
-    string ciphertext = aes->encrypt(plaintext);
-    file_write(cipherfile, ciphertext);
-    cout << "[AES] 已加密: " << cipherfile << endl;
-
-    string plainfile = OUT_DIR + "/AES_plaintext.txt";
-    plaintext = aes->decrypt(ciphertext);
-    file_write(plainfile, plaintext);
-    cout << "[AES] 已加密: " << plainfile << endl;
-
-    cout << "[AES] 测试完成" << endl;
+    cout << "[" << type << "] 测试完成" << endl << endl;
 }
