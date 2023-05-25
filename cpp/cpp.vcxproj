@@ -135,7 +135,7 @@
     <ClCompile Include="des_crypto.cpp" />
     <ClCompile Include="file_utils.cpp" />
     <ClCompile Include="file_utils.hpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="test_crypto.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes_crypto.hpp" />

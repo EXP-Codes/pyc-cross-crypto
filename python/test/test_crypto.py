@@ -15,15 +15,15 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 # ----------------------------------------------------------------------
 
-from des import DESCrypto
-from aes import AESCrypto
+from des_crypto import DESCrypto
+from aes_crypto import AESCrypto
 from utils import *
 from color_log.clog import log
 
 TESTED_PLAINTEXT = "特殊字符 $%^!@# 数字 123890 中文\tOK"
 TESTED_FILEPATH = './test/test_crypto.py'
 TESTED_ENCODING = judge_encoding(TESTED_FILEPATH)   # 被测文件原本的/解密后的编码
-CIPHERTEXT_ENCODING = "ISO-8859-1"                  # 加密后的文件编码（base64 统一用 ISO-8859-1 即可）
+CIPHERTEXT_ENCODING = "ISO-8859-1"                  # 加密后的文件编码（因为是 base64， 统一用 ISO-8859-1 即可）
 OUT_DIR = './out'
 
 
