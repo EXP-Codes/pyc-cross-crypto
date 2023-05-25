@@ -11,9 +11,9 @@
  *  https://blog.csdn.net/Yonggie/article/details/100592532
 \***************************************************/
 
-#include "aes_crypto.cpp"
-#include "des_crypto.h"
-#include "file_utils.h"
+#include "aes_crypto.hpp"
+#include "des_crypto.hpp"
+#include "file_utils.hpp"
 #include <iostream>
 using namespace std;
 
@@ -51,8 +51,8 @@ void test_des() {
 
     test_des_cache(des);
 
-    string filepath = "./out/OX.txt";
-    test_des_file(des, filepath);
+    //string filepath = "./out/OX.txt";
+    //test_des_file(des, filepath);
 }
 
 
@@ -73,7 +73,7 @@ void test_aes() {
 
 int main()
 {
-    // test_des();
+    test_des();
 
     test_aes();
     return 0;

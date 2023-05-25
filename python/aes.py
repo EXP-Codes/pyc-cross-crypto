@@ -16,8 +16,19 @@ AES_IV = "https://exp-blog.com"
 
 
 class AESCrypto :
+    """
+    使用AES算法进行加密和解密的AESCrypto类。
+    """
 
     def __init__(self, key: str, iv=AES_IV, encoding=PLAINTEXT_ENCODING) :
+        """
+        AESCrypto 构造函数。
+
+        :param key: 用于对称密码的密钥。必须为16（AES-128）、24（AES-192）或32（AES-256）字节长。
+        :param iv: 用于加密或解密的初始化向量。对于ECB模式，该参数将被忽略。对于CBC和CFB，必须为16字节长。
+        :param encoding: 在对明文进行编码或解码时使用的编码。
+        """
+
         self.block_size = AES.block_size
         self.encoding = encoding
         self.ISO_8859_1 = "ISO-8859-1"
@@ -28,6 +39,13 @@ class AESCrypto :
 
 
     def encrypt(self, plaintext: str) -> str :
+        """
+        使用 AES 加密对明文进行加密。
+
+        :param plaintext: 需要加密的文本。
+        :return: 以 base64 格式的加密文本。
+        """
+
         # AES 在加密/解密一次之后，IV 随机向量会改变，不能复用同一个对象
         aes = AES.new(self.key, AES.MODE_CBC, self.iv)
 
@@ -39,6 +57,13 @@ class AESCrypto :
     
 
     def decrypt(self, ciphertext: str) -> str :
+        """
+        使用 AES 解密对密文进行解密。
+
+        :param ciphertext: 需要解密的文本。
+        :return: 解密后的文本。
+        """
+
         # AES 在加密/解密一次之后，IV 随机向量会改变，不能复用同一个对象
         aes = AES.new(self.key, AES.MODE_CBC, self.iv)
 
@@ -50,12 +75,25 @@ class AESCrypto :
     
 
     def to_base64(self, text_bytes) :
+        """
+        将字节转换为 base64 字符串。
+
+        :param text_bytes: 需要转换为 base64 字符串的字节。
+        :return: base64 字符串。
+        """
+
         base64_bytes = base64.b64encode(text_bytes)
         base64_text = base64_bytes.decode(self.ISO_8859_1)
         return base64_text
 
 
     def un_base64(self, base64_text) :
+        """
+        将 base64 字符串转换为字节。
+
+        :param base64_text: 需要转换为字节的 base64 字符串。
+        :return: 转换后的字节。
+        """
         base64_bytes = base64_text.encode(self.ISO_8859_1)
         text_bytes = base64.b64decode(base64_bytes)
         return text_bytes

@@ -131,17 +131,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="aes.cpp" />
+    <ClCompile Include="aes_crypto.cpp" />
     <ClCompile Include="base64.cpp" />
     <ClCompile Include="base64.hpp" />
-    <ClCompile Include="des.cpp" />
+    <ClCompile Include="des_crypto.cpp" />
     <ClCompile Include="file_utils.cpp" />
     <ClCompile Include="file_utils.hpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="aes.hpp" />
-    <ClInclude Include="des.hpp" />
+    <ClInclude Include="aes_crypto.hpp" />
+    <ClInclude Include="des_crypto.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,14 +1,20 @@
-#include "base64.h"
-#include "des_crypto.h"
+#include "base64.hpp"
+#include "des_crypto.hpp"
 #include <des.h>
 #include <string>
 #include <iostream>
+#include <sstream>
 using namespace std;
-
+using namespace CryptoPP;
 
 DESCrypto::DESCrypto(string key)
 {
-    this->desKey = key;
+    SHA256 hash;
+    string digest;
+
+    StringSource s(key, true, new HashFilter(hash, new StringSink(digest)));
+
+    this->desKey = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
 }
 
 
@@ -40,7 +46,7 @@ string DESCrypto::encrypt(string plaintext)
     unsigned char in_cache[DES::BLOCKSIZE];
     unsigned char out_cache[DES::BLOCKSIZE];
 
-    char* plain_bytes = padding_PKCS5(plaintext);           //  π”√ PKCS5 ÃÓ≥‰∂‘∆Î
+    char* plain_bytes = padding_PKCS5(plaintext);           // ??? PKCS5 ??????
     int plaintext_len = plaintext.size();
     int pLen = plaintext_len / DES::BLOCKSIZE + 1;
     int cLen = pLen * DES::BLOCKSIZE;
@@ -54,12 +60,12 @@ string DESCrypto::encrypt(string plaintext)
         memcpy(in_cache, plain_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
 
         DESEncryption des_encryption;
-        des_encryption.SetKey(key, DES::KEYLENGTH);         // …Ë÷√√‹‘ø
-        des_encryption.ProcessBlock(in_cache, out_cache);   // º”√‹
+        des_encryption.SetKey(key, DES::KEYLENGTH);         // ???????
+        des_encryption.ProcessBlock(in_cache, out_cache);   // ????
         memcpy(cipher_bytes + (i * DES::BLOCKSIZE), out_cache, DES::BLOCKSIZE);
     }
 
-    // base64 ±‡¬Î
+    // base64 ????
     string ciphertext = to_base64(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen);
     return ciphertext;
 }
@@ -72,7 +78,7 @@ string DESCrypto::decrypt(string ciphertext)
     unsigned char key[DES::DEFAULT_KEYLENGTH];
     memcpy(key, this->desKey.c_str(), DES::BLOCKSIZE);
 
-    ciphertext = un_base64(ciphertext);                     // base64 Ω‚¬Î
+    ciphertext = un_base64(ciphertext);                     // base64 ????
 
     vector<unsigned char> plain_bytes;
     unsigned char in_cache[DES::BLOCKSIZE];
@@ -89,15 +95,15 @@ string DESCrypto::decrypt(string ciphertext)
         memcpy(in_cache, cipher_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
 
         DESDecryption des_decryption;
-        des_decryption.SetKey(key, DES::KEYLENGTH);         // …Ë÷√√‹‘ø
-        des_decryption.ProcessBlock(in_cache, out_cache);   // Ω‚√‹
+        des_decryption.SetKey(key, DES::KEYLENGTH);         // ???????
+        des_decryption.ProcessBlock(in_cache, out_cache);   // ????
         for (int k = 0; k < DES::BLOCKSIZE; k++)
         {
             plain_bytes.push_back(out_cache[k]);
         }
     }
 
-    // »•µÙº”√‹ ±ÃÓ≥‰µƒ◊÷∑˚
+    // ???????????????
     int pad_amount = plain_bytes[ciphertext_len - 1];
     string plaintext;
     plaintext.clear();
