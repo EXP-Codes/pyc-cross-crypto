@@ -17,7 +17,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 
 from des_crypto import DESCrypto
 from aes_crypto import AESCrypto
-from utils import *
+from file_utils import *
 from color_log.clog import log
 
 TESTED_PLAINTEXT = "特殊字符 $%^!@# 数字 123890 中文\tOK"
@@ -65,21 +65,17 @@ def test_file(algorithm) :
     elif not os.path.exists(OUT_DIR) :
         os.makedirs(OUT_DIR)
 
-    plaintext = ''
-    with open(tested_path, 'r', encoding=TESTED_ENCODING) as file :
-        plaintext = file.read()
+    plaintext = file_read(tested_path, TESTED_ENCODING)
     log.info(f"[{name}] 已读取被测文件（{TESTED_ENCODING}）: {tested_path}")
 
     cipherfile = f"{OUT_DIR}/{name}_ciphertext.cro"
     ciphertext = algorithm.encrypt(plaintext)
-    with open(cipherfile, 'w+', encoding=CIPHERTEXT_ENCODING) as file :
-        file.write(ciphertext)
+    file_write(cipherfile, ciphertext, CIPHERTEXT_ENCODING)
     log.info(f"[{name}] 已加密（{CIPHERTEXT_ENCODING}）: {cipherfile}")
 
     plainfile = f"{OUT_DIR}/{name}_plaintext.txt"
     plaintext = algorithm.decrypt(ciphertext)
-    with open(plainfile, 'w+', encoding=TESTED_ENCODING) as file :
-        file.write(plaintext)
+    file_write(plainfile, plaintext, TESTED_ENCODING)
     log.info(f"[{name}] 已解密（{TESTED_ENCODING}）: {plainfile}")
 
     log.warn(f"[{name}] 测试完成")
