@@ -10,7 +10,7 @@ using namespace std;
  * @param string filepath - 文件路径
  * @return char* - 返回读取到的文件内容
  */
-char* file_read(string filepath);
+string file_read(string filepath);
 
 /**
  * @brief 将数据写入文件

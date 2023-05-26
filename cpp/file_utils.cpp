@@ -6,7 +6,7 @@ using namespace std;
  * @param string filepath - 文件路径
  * @return char* - 返回读取到的文件内容
  */
-char* file_read(string filepath) {
+string file_read(string filepath) {
     FILE* fpr;
     errno_t err = fopen_s(&fpr, filepath.c_str(), "r");
     if (err != 0) {
@@ -24,7 +24,8 @@ char* file_read(string filepath) {
     *(buffer + filesize) = '\0';
 
     fclose(fpr);                // 关闭文件 
-    return buffer;
+    string filedate(buffer);
+    return filedate;
 }
 
 /**

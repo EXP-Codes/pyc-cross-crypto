@@ -60,8 +60,7 @@ template <typename Crypto>
 void test_file(Crypto* crypto, string type) {
     cout << "[" << type << "] 测试文件字符串加解密 ..." << endl;
 
-    char* filedata = file_read(TESTED_FILEPATH);
-    string plaintext(filedata);
+    string plaintext = file_read(TESTED_FILEPATH);
     cout << "[" << type << "] 已读取被测文件: " << TESTED_FILEPATH << endl;
 
     string cipherfile = OUT_DIR + "/" + type + "_ciphertext.cro";
