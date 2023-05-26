@@ -10,14 +10,15 @@
 
 
 AESCrypto::AESCrypto(std::string key, std::string iv) {
-    CryptoPP::SHA256 hash;
-    CryptoPP::byte digestKey[CryptoPP::SHA256::DIGESTSIZE];
-    hash.CalculateDigest(digestKey, (CryptoPP::byte*)key.c_str(), key.length());
-    this->key = std::string((char*)digestKey, CryptoPP::SHA256::DIGESTSIZE);
+    using namespace CryptoPP;
+    SHA256 hash;
+    byte digestKey[SHA256::DIGESTSIZE];
+    hash.CalculateDigest(digestKey, (byte*)key.c_str(), key.length());
+    this->key = std::string((char*)digestKey, SHA256::DIGESTSIZE);
 
-    CryptoPP::byte digestIv[CryptoPP::SHA256::DIGESTSIZE];
-    hash.CalculateDigest(digestIv, (CryptoPP::byte*)iv.c_str(), iv.length());
-    this->iv = std::string((char*)digestIv, CryptoPP::SHA256::DIGESTSIZE).substr(0, CryptoPP::AES::BLOCKSIZE);
+    byte digestIv[SHA256::DIGESTSIZE];
+    hash.CalculateDigest(digestIv, (byte*)iv.c_str(), iv.length());
+    this->iv = std::string((char*)digestIv, SHA256::DIGESTSIZE).substr(0, AES::BLOCKSIZE);
 }
 
 std::string AESCrypto::encrypt(std::string plaintext) {

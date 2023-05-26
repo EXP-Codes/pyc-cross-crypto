@@ -4,7 +4,7 @@
  * @Time   : 2022/11/15 23:56
  * -----------------------------------------------
  * DES �ӽ��ܹ���
- * �㷨 ECB�� ���ģʽ PKCS5
+ * �㷨 ECB�� ���ģ�? PKCS5
 \***************************************************/
 #include "des_crypto.hpp"
 
@@ -91,6 +91,7 @@ std::string DESCrypto::decrypt(std::string ciphertext) {
 }
 
 char* DESCrypto::padding_PKCS5(std::string plaintext) {
+    using namespace CryptoPP;
     int plaintext_len = plaintext.size();
     int pad_amount = DES::BLOCKSIZE - plaintext_len % DES::BLOCKSIZE;
     int pad_plain_len = plaintext_len + pad_amount;
