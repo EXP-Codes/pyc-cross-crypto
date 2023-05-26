@@ -52,8 +52,7 @@ void file_write(string filepath, string filedata) {
  * @param char* suffix - 指定后缀
  * @return bool - 如果文件名以指定后缀结尾，则返回true，否则返回false
  */
-bool endswith(char* filename, char* suffix)
-{
+bool endswith(char* filename, char* suffix) {
     char* dot = strrchr(filename, '.');
     if (NULL == dot) {
         return 0;
