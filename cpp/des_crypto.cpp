@@ -3,8 +3,8 @@
  * @Author : EXP
  * @Time   : 2022/11/15 23:56
  * -----------------------------------------------
- * DES ¼Ó½âÃÜ¹¤¾ß
- * Ëã·¨ ECB£¬ Ìî³äÄ£Ê½ PKCS5
+ * DES ï¿½Ó½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
+ * ï¿½ã·¨ ECBï¿½ï¿½ ï¿½ï¿½ï¿½Ä£Ê½ PKCS5
 \***************************************************/
 #include "des_crypto.hpp"
 
@@ -15,22 +15,6 @@ DESCrypto::DESCrypto(std::string key) {
     std::string digest;
     StringSource s(key, true, new HashFilter(hash, new StringSink(digest)));
     this->key = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
-}
-
-char* DESCrypto::padding_PKCS5(std::string plaintext) {
-    using namespace CryptoPP;
-
-    int plaintext_len = plaintext.size();
-    int pad_amount = DES::BLOCKSIZE - plaintext_len % DES::BLOCKSIZE;
-    int pad_plain_len = plaintext_len + pad_amount;
-
-    char* pad_plain_bytes = (char*)malloc(pad_plain_len);
-    memcpy(pad_plain_bytes, plaintext.c_str(), plaintext_len);
-    for (int i = plaintext_len; i < pad_plain_len; i++)
-    {
-        pad_plain_bytes[i] = pad_amount;
-    }
-    return pad_plain_bytes;
 }
 
 std::string DESCrypto::encrypt(std::string plaintext) {
@@ -66,13 +50,6 @@ std::string DESCrypto::encrypt(std::string plaintext) {
     StringSource ss(reinterpret_cast<const unsigned char*>(cipher_bytes), cLen,
         true, new Base64Encoder(new StringSink(ciphertext)));
     return ciphertext;
-}
-
-std::string DESCrypto::unpadding_PKCS5(std::vector<unsigned char>& plain_bytes) {
-    int pad_amount = plain_bytes[plain_bytes.size() - 1];
-    std::string plaintext;
-    plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
-    return plaintext;
 }
 
 std::string DESCrypto::decrypt(std::string ciphertext) {
@@ -113,3 +90,23 @@ std::string DESCrypto::decrypt(std::string ciphertext) {
     return plaintext;
 }
 
+char* DESCrypto::padding_PKCS5(std::string plaintext) {
+    int plaintext_len = plaintext.size();
+    int pad_amount = DES::BLOCKSIZE - plaintext_len % DES::BLOCKSIZE;
+    int pad_plain_len = plaintext_len + pad_amount;
+
+    char* pad_plain_bytes = (char*)malloc(pad_plain_len);
+    memcpy(pad_plain_bytes, plaintext.c_str(), plaintext_len);
+    for (int i = plaintext_len; i < pad_plain_len; i++)
+    {
+        pad_plain_bytes[i] = pad_amount;
+    }
+    return pad_plain_bytes;
+}
+
+std::string DESCrypto::unpadding_PKCS5(std::vector<unsigned char>& plain_bytes) {
+    int pad_amount = plain_bytes[plain_bytes.size() - 1];
+    std::string plaintext;
+    plaintext.assign(plain_bytes.begin(), plain_bytes.end() - pad_amount);
+    return plaintext;
+}
