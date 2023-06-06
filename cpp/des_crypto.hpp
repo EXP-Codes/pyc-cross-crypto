@@ -6,7 +6,6 @@
 #include <des.h>
 #include <sha.h>
 #include <base64.h>
-#include <string>
 #include <iostream>
 #include <sstream>
 #include <filters.h>
