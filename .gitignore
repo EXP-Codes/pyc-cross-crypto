@@ -7,7 +7,7 @@
 *.o
 *.obj
 *.py[co]
-# cpp/build/*
+cpp/build/*
 
 # Precompiled Headers
 *.gch
@@ -41,6 +41,3 @@ logs
 log
 *.log
 out
-
-
-cryptopp

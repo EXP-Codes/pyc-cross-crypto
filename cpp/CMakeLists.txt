@@ -33,6 +33,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/cryptopp)
 
 # Set the library directories and link libraries
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-  link_directories(${CMAKE_SOURCE_DIR}/cryptopp/.vs/build/x64/Release)
-  target_link_libraries(${PROJECT_NAME} libcryptopp)
+  target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/cryptopp/.vs/build/x64/Release/libcryptopp.a)
 endif()

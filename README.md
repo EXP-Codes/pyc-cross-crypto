@@ -60,5 +60,6 @@ python 环境直接安装就好， windows 和 mac 都是一样的。
   1. `mkdir -p cpp/build`
   2. `cd cpp/build`
   3. `cmake -DCMAKE_BUILD_TYPE=Release ..`
-  4. `make`
+  4. 编译: `make`
+  5. 执行: `./cpp`
 
