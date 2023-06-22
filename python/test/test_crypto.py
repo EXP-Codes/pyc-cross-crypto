@@ -149,12 +149,12 @@ def get_algorithm(option, key, iv, charset):
 
 
 
-def defavlt(key, iv) :
-    des = DESCrypto(key, encoding=TESTED_ENCODING)
+def defavlt(key, iv, charset=TESTED_ENCODING) :
+    des = DESCrypto(key, encoding=charset)
     test_cache(des)
     test_file(des)
 
-    aes = AESCrypto(key, iv=iv, encoding=TESTED_ENCODING)
+    aes = AESCrypto(key, iv=iv, encoding=charset)
     test_cache(aes)
     test_file(aes)
 
