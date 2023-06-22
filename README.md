@@ -58,10 +58,9 @@ python 环境直接安装就好， Windows 和 Mac 都是一样的。
 - Windows（需要提前安装 VS2022）: 
   - GUI 方法： 使用 VS2022 打开 [cpp.sln](./cpp/cpp.sln) 文件即可
   - CMD 方法：
-    1. 设置 VS2022 的 `Community\Common7\IDE` 到系统环境变量 PATH
-    2. `cd cpp`
-    3. 编译: `bin/build.ps1`
-    4. 执行: `bin/run.ps1`
+    1. `cd cpp`
+    2. 编译: `bin/build.ps1`
+    3. 执行: `bin/run.ps1`
 - Mac (需要提前安装 g++ 和 cmake): 
   1. `mkdir -p cpp/build`
   2. `cd cpp/build`
