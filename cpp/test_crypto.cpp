@@ -1,9 +1,9 @@
-ï»¿/***************************************************\
+/***************************************************\
  * -*- coding: GBK -*-
  * @Author : EXP
  * @Time   : 2022/11/15 23:56
  * -----------------------------------------------
- * AES/DES è·¨å¹³å°åŠ è§£å¯†æµ‹è¯•
+ * AES/DES ¿çÆ½Ì¨¼Ó½âÃÜ²âÊÔ
 \***************************************************/
 
 #include "crypto.hpp"
@@ -13,10 +13,10 @@
 #include <iostream>
 using namespace std;
 
-const string TESTED_PLAINTEXT = "ç‰¹æ®Šå­—ç¬¦ $%^!@# æ•°å­— 123890 ä¸­æ–‡\tOK";
+const string TESTED_PLAINTEXT = "ÌØÊâ×Ö·û $%^!@# Êı×Ö 123890 ÖĞÎÄ\tOK";
 const string TESTED_FILEPATH = "'../../test_crypto.cpp";
-const string TESTED_ENCODING = "GBK";                    // è¢«æµ‹æ–‡ä»¶åŸæœ¬çš„ or è§£å¯†åçš„ç¼–ç ï¼ˆæš‚æ—¶æ²¡ç”¨ï¼ŒC è¯»å†™æ˜¯å­—èŠ‚ç ï¼Œä¸ç¼–ç æ— å…³ï¼‰
-const string CIPHERTEXT_ENCODING = "ISO-8859-1";         // åŠ å¯†åçš„æ–‡ä»¶ç¼–ç ï¼ˆå› ä¸ºæ˜¯ base64ï¼Œ ç»Ÿä¸€ç”¨ ISO-8859-1 å³å¯ï¼‰
+const string TESTED_ENCODING = "GBK";                    // ±»²âÎÄ¼şÔ­±¾µÄ or ½âÃÜºóµÄ±àÂë£¨ÔİÊ±Ã»ÓÃ£¬C ¶ÁĞ´ÊÇ×Ö½ÚÂë£¬Óë±àÂëÎŞ¹Ø£©
+const string CIPHERTEXT_ENCODING = "ISO-8859-1";         // ¼ÓÃÜºóµÄÎÄ¼ş±àÂë£¨ÒòÎªÊÇ base64£¬ Í³Ò»ÓÃ ISO-8859-1 ¼´¿É£©
 const string OUT_DIR = "./out";
 
 
@@ -35,9 +35,9 @@ int main() {
     string key = "EXP-BLOG";
     string iv = "https://exp-blog.com";
 
-    cout << "è¯·é€‰æ‹©ä»¥ä¸‹æµ‹è¯•æ¨¡å¼ï¼š" << endl;
-    cout << "1. äº¤äº’æ¨¡å¼" << endl;
-    cout << "2. é»˜è®¤æ¨¡å¼" << endl;
+    cout << "ÇëÑ¡ÔñÒÔÏÂ²âÊÔÄ£Ê½£º" << endl;
+    cout << "1. ½»»¥Ä£Ê½" << endl;
+    cout << "2. Ä¬ÈÏÄ£Ê½" << endl;
     string option;
     cin >> option;
     if (option == "1") {
@@ -52,11 +52,11 @@ int main() {
 
 void interactive(string key, string iv) {
     while (true) {
-        cout << "è¯·é€‰æ‹©æ“ä½œï¼š" << endl;
-        cout << "1. åŠ å¯†æµ‹è¯•" << endl;
-        cout << "2. è§£å¯†æµ‹è¯•" << endl;
-        cout << "3. é€€å‡º" << endl;
-        cout << "è¯·è¾“å…¥é€‰é¡¹ç¼–å·ï¼š" << endl;
+        cout << "ÇëÑ¡Ôñ²Ù×÷£º" << endl;
+        cout << "1. ¼ÓÃÜ²âÊÔ" << endl;
+        cout << "2. ½âÃÜ²âÊÔ" << endl;
+        cout << "3. ÍË³ö" << endl;
+        cout << "ÇëÊäÈëÑ¡Ïî±àºÅ£º" << endl;
         string option;
         cin >> option;
         if (option == "1") {
@@ -69,40 +69,40 @@ void interactive(string key, string iv) {
             break;
 
         } else {
-            cout << "æœªçŸ¥é€‰é¡¹ï¼Œè¯·é‡æ–°è¾“å…¥ï¼" << endl;
+            cout << "Î´ÖªÑ¡Ïî£¬ÇëÖØĞÂÊäÈë£¡" << endl;
         }
     }
 }
 
 
 void encryption_test(string key, string iv) {
-    cout << "è¯·é€‰æ‹©åŠ å¯†ç®—æ³•ï¼š" << endl;
+    cout << "ÇëÑ¡Ôñ¼ÓÃÜËã·¨£º" << endl;
     cout << "1. AES" << endl;
     cout << "2. DES" << endl;
-    cout << "è¯·è¾“å…¥é€‰é¡¹ç¼–å·ï¼š" << endl;
+    cout << "ÇëÊäÈëÑ¡Ïî±àºÅ£º" << endl;
     string algorithm_option;
     cin >> algorithm_option;
 
-    cout << "è¯·é€‰æ‹©åŠ å¯†ç±»å‹ï¼š" << endl;
-    cout << "1. å­—ç¬¦ä¸²" << endl;
-    cout << "2. æ–‡ä»¶" << endl;
-    cout << "è¯·è¾“å…¥é€‰é¡¹ç¼–å·ï¼š" << endl;
+    cout << "ÇëÑ¡Ôñ¼ÓÃÜÀàĞÍ£º" << endl;
+    cout << "1. ×Ö·û´®" << endl;
+    cout << "2. ÎÄ¼ş" << endl;
+    cout << "ÇëÊäÈëÑ¡Ïî±àºÅ£º" << endl;
     string type_option;
     cin >> type_option;
 
     string data;
     if (type_option == "1") {
-        cout << "è¯·è¾“å…¥è¦åŠ å¯†çš„å­—ç¬¦ä¸²ï¼š" << endl;
+        cout << "ÇëÊäÈëÒª¼ÓÃÜµÄ×Ö·û´®£º" << endl;
         cin >> data;
 
     } else if (type_option == "2") {
-        cout << "è¯·è¾“å…¥è¦åŠ å¯†çš„æ–‡ä»¶è·¯å¾„ï¼š" << endl;
+        cout << "ÇëÊäÈëÒª¼ÓÃÜµÄÎÄ¼şÂ·¾¶£º" << endl;
         string filepath;
         cin >> filepath;
         data = file_read(filepath);
 
     } else {
-        cout << "æœªçŸ¥é€‰é¡¹ï¼Œè¿”å›ä¸»èœå•ï¼" << endl;
+        cout << "Î´ÖªÑ¡Ïî£¬·µ»ØÖ÷²Ëµ¥£¡" << endl;
         return;
     }
 
@@ -113,42 +113,42 @@ void encryption_test(string key, string iv) {
     if (type_option == "2") {
         string cipherfile = OUT_DIR + "/" + name + "_ciphertext.cro";
         file_write(cipherfile, ciphertext);
-        cout << "[" << name << "] å·²åŠ å¯†: " << cipherfile << endl << endl;
+        cout << "[" << name << "] ÒÑ¼ÓÃÜ: " << cipherfile << endl << endl;
         
     } else {
-        cout << "[" << name << "] å¯†æ–‡: " << ciphertext << endl << endl;
+        cout << "[" << name << "] ÃÜÎÄ: " << ciphertext << endl << endl;
     }
 }
 
 
 void decryption_test(string key, string iv) {
-    cout << "è¯·é€‰æ‹©è§£å¯†ç®—æ³•ï¼š" << endl;
+    cout << "ÇëÑ¡Ôñ½âÃÜËã·¨£º" << endl;
     cout << "1. AES" << endl;
     cout << "2. DES" << endl;
-    cout << "è¯·è¾“å…¥é€‰é¡¹ç¼–å·ï¼š" << endl;
+    cout << "ÇëÊäÈëÑ¡Ïî±àºÅ£º" << endl;
     string algorithm_option;
     cin >> algorithm_option;
 
-    cout << "è¯·é€‰æ‹©è§£å¯†ç±»å‹ï¼š" << endl;
-    cout << "1. å­—ç¬¦ä¸²" << endl;
-    cout << "2. æ–‡ä»¶" << endl;
-    cout << "è¯·è¾“å…¥é€‰é¡¹ç¼–å·ï¼š" << endl;
+    cout << "ÇëÑ¡Ôñ½âÃÜÀàĞÍ£º" << endl;
+    cout << "1. ×Ö·û´®" << endl;
+    cout << "2. ÎÄ¼ş" << endl;
+    cout << "ÇëÊäÈëÑ¡Ïî±àºÅ£º" << endl;
     string type_option;
     cin >> type_option;
 
     string data;
     if (type_option == "1") {
-        cout << "è¯·è¾“å…¥è¦è§£å¯†çš„å­—ç¬¦ä¸²ï¼š" << endl;
+        cout << "ÇëÊäÈëÒª½âÃÜµÄ×Ö·û´®£º" << endl;
         cin >> data;
 
     } else if (type_option == "2") {
-        cout << "è¯·è¾“å…¥è¦è§£å¯†çš„æ–‡ä»¶è·¯å¾„ï¼š" << endl;
+        cout << "ÇëÊäÈëÒª½âÃÜµÄÎÄ¼şÂ·¾¶£º" << endl;
         string filepath;
         cin >> filepath;
         data = file_read(filepath);
 
     } else {
-        cout << "æœªçŸ¥é€‰é¡¹ï¼Œè¿”å›ä¸»èœå•ï¼" << endl;
+        cout << "Î´ÖªÑ¡Ïî£¬·µ»ØÖ÷²Ëµ¥£¡" << endl;
         return;
     }
 
@@ -159,10 +159,10 @@ void decryption_test(string key, string iv) {
     if (type_option == "2") {
         string plainfile = OUT_DIR + "/" + name + "_plaintext.txt";
         file_write(plainfile, plaintext);
-        cout << "[" << name << "] å·²è§£å¯†: " << plainfile << endl << endl;
+        cout << "[" << name << "] ÒÑ½âÃÜ: " << plainfile << endl << endl;
 
     } else {
-        cout << "[" << name << "] è§£å¯†: " << plaintext << endl << endl;
+        cout << "[" << name << "] ½âÃÜ: " << plaintext << endl << endl;
     }
 }
 
@@ -191,35 +191,35 @@ void defavlt(string key, string iv) {
 
 
 void test_cache(Crypto* crypto, string type) {
-    cout << "[" << type << "] æµ‹è¯•å†…å­˜å­—ç¬¦ä¸²åŠ è§£å¯† ..." << endl;
+    cout << "[" << type << "] ²âÊÔÄÚ´æ×Ö·û´®¼Ó½âÃÜ ..." << endl;
 
     string plaintext = TESTED_PLAINTEXT;
-    cout << "[" << type << "] æ˜æ–‡: " << plaintext << endl;
+    cout << "[" << type << "] Ã÷ÎÄ: " << plaintext << endl;
 
     string ciphertext = crypto->encrypt(plaintext);
-    cout << "[" << type << "] å¯†æ–‡: " << ciphertext << endl;
+    cout << "[" << type << "] ÃÜÎÄ: " << ciphertext << endl;
 
     plaintext = crypto->decrypt(ciphertext);
-    cout << "[" << type << "] è§£å¯†: " << plaintext << endl;
-    cout << "[" << type << "] æµ‹è¯•å®Œæˆ" << endl << endl;
+    cout << "[" << type << "] ½âÃÜ: " << plaintext << endl;
+    cout << "[" << type << "] ²âÊÔÍê³É" << endl << endl;
 }
 
 
 void test_file(Crypto* crypto, string type) {
-    cout << "[" << type << "] æµ‹è¯•æ–‡ä»¶å­—ç¬¦ä¸²åŠ è§£å¯† ..." << endl;
+    cout << "[" << type << "] ²âÊÔÎÄ¼ş×Ö·û´®¼Ó½âÃÜ ..." << endl;
 
     string plaintext = file_read(TESTED_FILEPATH);
-    cout << "[" << type << "] å·²è¯»å–è¢«æµ‹æ–‡ä»¶: " << TESTED_FILEPATH << endl;
+    cout << "[" << type << "] ÒÑ¶ÁÈ¡±»²âÎÄ¼ş: " << TESTED_FILEPATH << endl;
 
     string cipherfile = OUT_DIR + "/" + type + "_ciphertext.cro";
     string ciphertext = crypto->encrypt(plaintext);
     file_write(cipherfile, ciphertext);
-    cout << "[" << type << "] å·²åŠ å¯†: " << cipherfile << endl;
+    cout << "[" << type << "] ÒÑ¼ÓÃÜ: " << cipherfile << endl;
 
     string plainfile = OUT_DIR + "/" + type + "_plaintext.txt";
     plaintext = crypto->decrypt(ciphertext);
     file_write(plainfile, plaintext);
-    cout << "[" << type << "] å·²è§£å¯†: " << plainfile << endl;
+    cout << "[" << type << "] ÒÑ½âÃÜ: " << plainfile << endl;
 
-    cout << "[" << type << "] æµ‹è¯•å®Œæˆ" << endl << endl;
+    cout << "[" << type << "] ²âÊÔÍê³É" << endl << endl;
 }
