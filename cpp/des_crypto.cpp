@@ -70,8 +70,7 @@ std::string DESCrypto::decrypt(std::string ciphertext) {
     int ciphertext_len = ciphertext.size();
     int cLen = ciphertext_len / DES::BLOCKSIZE;
 
-    for (int i = 0; i < cLen; i++)
-    {
+    for (int i = 0; i < cLen; i++) {
         memset(in_cache, 0, DES::BLOCKSIZE);
         memset(out_cache, 0, DES::BLOCKSIZE);
         memcpy(in_cache, cipher_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
@@ -79,8 +78,7 @@ std::string DESCrypto::decrypt(std::string ciphertext) {
         DESDecryption des_decryption;
         des_decryption.SetKey(key, DES::KEYLENGTH);
         des_decryption.ProcessBlock(in_cache, out_cache);
-        for (int k = 0; k < DES::BLOCKSIZE; k++)
-        {
+        for (int k = 0; k < DES::BLOCKSIZE; k++) {
             plain_bytes.push_back(out_cache[k]);
         }
     }
@@ -97,8 +95,7 @@ char* DESCrypto::padding_PKCS5(std::string plaintext) {
 
     char* pad_plain_bytes = (char*)malloc(pad_plain_len);
     memcpy(pad_plain_bytes, plaintext.c_str(), plaintext_len);
-    for (int i = plaintext_len; i < pad_plain_len; i++)
-    {
+    for (int i = plaintext_len; i < pad_plain_len; i++) {
         pad_plain_bytes[i] = pad_amount;
     }
     return pad_plain_bytes;

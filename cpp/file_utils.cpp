@@ -9,13 +9,13 @@ using namespace std;
 string file_read(string filepath) {
     FILE* fpr;
 #ifdef _MSC_VER
-    errno_t err = fopen_s(&fpr, filepath.c_str(), "r");
+    errno_t err = fopen_s(&fpr, filepath.c_str(), "rb");
     if (err != 0) {
         cout << "[ERROR] Failed to open file: " << filepath << endl;
         exit(1);
     }
 #else
-    fpr = fopen(filepath.c_str(), "r");
+    fpr = fopen(filepath.c_str(), "rb");
     if (fpr == NULL) {
         cout << "[ERROR] Failed to open file: " << filepath << endl;
         exit(1);
@@ -44,13 +44,13 @@ string file_read(string filepath) {
 void file_write(string filepath, string filedata) {
     FILE* fpw;
 #ifdef _MSC_VER
-    errno_t err = fopen_s(&fpw, filepath.c_str(), "w+");
+    errno_t err = fopen_s(&fpw, filepath.c_str(), "wb+");
     if (err != 0) {
         cout << "[ERROR] Failed to open file: " << filepath << endl;
         exit(1);
     }
 #else
-    fpw = fopen(filepath.c_str(), "w+");
+    fpw = fopen(filepath.c_str(), "wb+");
     if (fpw == NULL) {
         cout << "[ERROR] Failed to open file: " << filepath << endl;
         exit(1);
