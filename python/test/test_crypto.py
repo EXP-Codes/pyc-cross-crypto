@@ -15,11 +15,14 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 # ----------------------------------------------------------------------
 
+import os
+from dotenv import load_dotenv
 from des_crypto import DESCrypto
 from aes_crypto import AESCrypto
 from file_utils import *
 from color_log.clog import log
 
+CRYPTO_ARG_PATH = '../.env'
 TESTED_PLAINTEXT = "特殊字符 $%^!@# 数字 123890 中文\tOK"
 TESTED_FILEPATH = './test/test_crypto.py'
 TESTED_ENCODING = judge_encoding(TESTED_FILEPATH)   # 被测文件原本的/解密后的编码
@@ -28,8 +31,7 @@ OUT_DIR = './out'
 
 
 def main() :
-    key = "EXP-BLOG"
-    iv = "https://exp-blog.com"
+    key, iv = load_crypto_args()
 
     log.info("请选择以下测试模式：")
     log.info("1. 交互模式")
@@ -40,6 +42,13 @@ def main() :
     else :
         defavlt(key, iv)
     
+
+def load_crypto_args(envpath=CRYPTO_ARG_PATH) :
+    load_dotenv(dotenv_path=envpath)
+    key = os.getenv('key')
+    iv = os.getenv('iv')
+    return (key, iv)
+
 
 def interactive(key, iv) :
     while True:

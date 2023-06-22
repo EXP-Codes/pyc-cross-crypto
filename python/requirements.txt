@@ -3,3 +3,4 @@ py-color-log>=1.0.4
 chardet>=5.1.0
 pyDes>=2.0.1
 pycryptodome>=3.17
+python-dotenv>=1.0.0

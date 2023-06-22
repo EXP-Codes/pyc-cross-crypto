@@ -11,14 +11,19 @@
 #include "des_crypto.hpp"
 #include "file_utils.hpp"
 #include <iostream>
+#include <fstream>
+#include <map>
 using namespace std;
 
+const string CRYPTO_ARG_PATH = "../.env";
 const string TESTED_PLAINTEXT = "特殊字符 $%^!@# 数字 123890 中文\tOK";
 const string TESTED_FILEPATH = "'../../test_crypto.cpp";
 const string TESTED_ENCODING = "GBK";                    // 被测文件原本的 or 解密后的编码（暂时没用，C 读写是字节码，与编码无关）
 const string CIPHERTEXT_ENCODING = "ISO-8859-1";         // 加密后的文件编码（因为是 base64， 统一用 ISO-8859-1 即可）
 const string OUT_DIR = "./out";
 
+
+map<string, string> load_crypto_args(const string& envpath);
 
 void interactive(string key, string iv);
 void defavlt(string key, string iv);
@@ -32,8 +37,9 @@ void test_file(Crypto* crypto, string type);
 
 
 int main() {
-    string key = "EXP-BLOG";
-    string iv = "https://exp-blog.com";
+    auto args = load_crypto_args(CRYPTO_ARG_PATH);
+    string key = args["key"];
+    string iv = args["iv"];
 
     cout << "请选择以下测试模式：" << endl;
     cout << "1. 交互模式" << endl;
@@ -47,6 +53,30 @@ int main() {
         defavlt(key, iv);
     }
     return 0;
+}
+
+
+map<string, string> load_crypto_args(const string& envpath) {
+    map<string, string> args;
+    ifstream envFile(envpath);
+    if (!envFile) {
+        cerr << "Can't open .env file: " << envpath << endl;
+        return args;
+    }
+
+    string line;
+    while (getline(envFile, line)) {
+        istringstream iss(line);
+        string key, equal, value;
+
+        bool ok = getline(iss, key, '=') && getline(iss, value);
+        if (ok) {
+            args[key] = value;
+        } else {
+            cerr << "Failed to parse line: " << line << endl;
+        }
+    }
+    return args;
 }
 
 
