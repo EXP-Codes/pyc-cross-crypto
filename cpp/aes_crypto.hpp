@@ -1,6 +1,7 @@
 #ifndef AESCRYPTO_HPP
 #define AESCRYPTO_HPP
 
+#include "crypto.hpp"
 #include <sstream>
 #include <iomanip>
 #include <string>
@@ -10,7 +11,7 @@
 #include <modes.h>
 
 
-class AESCrypto {
+class AESCrypto : public Crypto {
 
 private:
     std::string key;    // 加密密钥
@@ -50,14 +51,14 @@ public:
      * @param std::string plaintext - 需要加密的明文
      * @return std::string - 加密后的密文
      */
-    std::string encrypt(std::string plaintext);
+    std::string encrypt(std::string plaintext) override;
 
     /**
      * @brief AES解密
      * @param std::string ciphertext - 需要解密的密文
      * @return std::string - 解密后的明文
      */
-    std::string decrypt(std::string ciphertext);
+    std::string decrypt(std::string ciphertext) override;
 
 };
 

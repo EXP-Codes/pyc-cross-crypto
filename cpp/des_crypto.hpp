@@ -1,6 +1,7 @@
 #ifndef DES_CRYPTO_HPP
 #define DES_CRYPTO_HPP
 
+#include "crypto.hpp"
 #include <string>
 #include <vector>
 #include <des.h>
@@ -11,7 +12,7 @@
 #include <filters.h>
 
 
-class DESCrypto {
+class DESCrypto : public Crypto {
 
 private:
 
@@ -43,14 +44,14 @@ public:
      * @param plaintext 明文
      * @return 加密后的密文
      */
-    std::string encrypt(std::string plaintext);
+    std::string encrypt(std::string plaintext) override;
 
     /**
      * @brief 对密文进行解密
      * @param ciphertext 密文
      * @return 解密后的明文
      */
-    std::string decrypt(std::string ciphertext);
+    std::string decrypt(std::string ciphertext) override;
 
 };
 

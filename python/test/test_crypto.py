@@ -51,10 +51,13 @@ def interactive(key, iv) :
         option = input("请输入选项编号：")
         if option == '1':
             encryption_test(key, iv)
+
         elif option == '2':
             decryption_test(key, iv)
+
         elif option == '3':
             break
+        
         else:
             log.warn("未知选项，请重新输入！")
 
@@ -78,21 +81,22 @@ def encryption_test(key, iv):
         filepath = input("请输入要加密的文件路径：")
         charset = judge_encoding(filepath)
         data = file_read(filepath, charset)
+
     else:
         log.warn("未知选项，返回主菜单！")
         return
 
+    name = "AES" if algorithm_option == '1' else "DES"
     algorithm = get_algorithm(algorithm_option, key, iv, charset)
     ciphertext = algorithm.encrypt(data)
 
     if type_option == '2':
-        name = "AES" if algorithm_option == '1' else "DES"
         cipherfile = f"{OUT_DIR}/{name}_ciphertext.cro"
         file_write(cipherfile, ciphertext, CIPHERTEXT_ENCODING)
         log.info(f"[{name}] 已加密（{CIPHERTEXT_ENCODING}）: {cipherfile}")
         
     else :
-        log.info(f"密文: {ciphertext}")
+        log.info(f"[{name}] 密文: {ciphertext}")
 
 
 def decryption_test(key, iv):
@@ -119,31 +123,29 @@ def decryption_test(key, iv):
         log.info("2. GBK")
         charset_option = input("请输入选项编号：")
         charset = "UTF-8" if charset_option == '1' else "GBK"
+
     else:
         log.warn("未知选项，返回主菜单！")
         return
 
+    name = "AES" if algorithm_option == '1' else "DES"
     algorithm = get_algorithm(algorithm_option, key, iv, charset)
     plaintext = algorithm.decrypt(data)
 
     if type_option == '2':
-        name = "AES" if algorithm_option == '1' else "DES"
         plainfile = f"{OUT_DIR}/{name}_plaintext.txt"
         file_write(plainfile, plaintext, charset)
         log.info(f"[{name}] 已解密（{charset}）: {plainfile}")
     else :
-        log.info(f"明文: {plaintext}")
+        log.info(f"[{name}] 明文: {plaintext}")
     
 
 
 def get_algorithm(option, key, iv, charset):
     if option == '1':
         return AESCrypto(key, iv=iv, encoding=charset)
-    elif option == '2':
+    else :
         return DESCrypto(key, encoding=charset)
-    else:
-        log.warn("未知选项，返回主菜单！")
-        return
 
 
 

@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="aes_crypto.hpp" />
+    <ClInclude Include="crypto.hpp" />
     <ClInclude Include="des_crypto.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
