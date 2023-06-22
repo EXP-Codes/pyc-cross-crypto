@@ -33,8 +33,7 @@ std::string DESCrypto::encrypt(std::string plaintext) {
     char* cipher_bytes = new char[cLen];
     memset(cipher_bytes, 0, cLen);
 
-    for (int i = 0; i < pLen; i++)
-    {
+    for (int i = 0; i < pLen; i++) {
         memset(in_cache, 0, DES::BLOCKSIZE);
         memset(out_cache, 0, DES::BLOCKSIZE);
         memcpy(in_cache, plain_bytes + (i * DES::BLOCKSIZE), DES::BLOCKSIZE);
