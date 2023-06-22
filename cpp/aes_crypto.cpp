@@ -7,6 +7,7 @@
  * 算法 CBC， 填充模式 PKCS7
 \***************************************************/
 #include "aes_crypto.hpp"
+#include <iostream>
 
 
 AESCrypto::AESCrypto(std::string key, std::string iv) {
@@ -83,19 +84,34 @@ std::string AESCrypto::pad_pkcs7(const std::string& str) {
     using namespace CryptoPP;
     int padding = AES::BLOCKSIZE - (str.size() % AES::BLOCKSIZE);
     std::string result = str;
-    result.append(padding, (char)padding);
+    result.append(padding, (char) padding);
     return result;
 }
 
 std::string AESCrypto::unpad_pkcs7(const std::string& str) {
     using namespace CryptoPP;
-    std::string result = str;
-    unsigned char lastChar = result.at(result.size() - 1);
-    if (lastChar <= 0x00 || lastChar > AES::BLOCKSIZE) {
-        // 有些语言的填充算法，如果被加密串的长度刚好为 BLOCKSIZE 的整数倍，不会填充一个 BLOCK
+
+    size_t str_len = str.size();
+    if (str_len == 0) {
+        return str;
+    }
+
+    // 检查输入字符串的长度是否为块大小的整数倍。
+    // 如果不是，说明输入字符串没有被正确地填充，直接返回原串
+    if (str_len % AES::BLOCKSIZE != 0) {
+        return str;
+    }
+    
+    // 获取输入字符串的最后一个字符，这个字符表示填充的长度
+    unsigned char lastChar = str.back();
+    if (lastChar < 1 || lastChar > AES::BLOCKSIZE) {
+        // 有些语言（如 python）的填充算法，如果被加密串的长度刚好为 BLOCKSIZE 的整数倍，不会填充一个 BLOCK
         // 为了避免这种异常，当发现最后的 BLOCK 不是填充的时候，不做任何操作
         return str;
     }
+    
+    // 删除最后的填充字符，从而得到原始的字符串
+    std::string result = str;
     result.erase(result.end() - lastChar, result.end());
     return result;
 }
