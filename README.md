@@ -68,3 +68,5 @@ python 环境直接安装就好， Windows 和 Mac 都是一样的。
   4. 编译: `make`
   5. 执行: `./cpp`
 
+![](./imgs/test_demo.jpg)
+
