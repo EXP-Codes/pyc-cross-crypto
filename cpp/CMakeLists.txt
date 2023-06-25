@@ -5,10 +5,10 @@ project(cpp)
 
 # Add the executable
 add_executable(${PROJECT_NAME} 
+    test_crypto.cpp
     aes_crypto.cpp
     des_crypto.cpp
     file_utils.cpp
-    test_crypto.cpp
 )
 
 # Set the C++ standard

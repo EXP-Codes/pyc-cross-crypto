@@ -8,6 +8,7 @@
 *.obj
 *.py[co]
 cpp/build/*
+cpp/cbuild/*
 
 # Precompiled Headers
 *.gch
@@ -41,3 +42,4 @@ logs
 log
 *.log
 out
+.vscode
