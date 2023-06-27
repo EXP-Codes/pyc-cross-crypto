@@ -15,4 +15,4 @@ $vsPath = & "$vsWhere" -products * -property installationPath
 # 格式: 
 #   devenv ${项目名称}.sln /Project ${项目名称} /Build [Debug|Release]
 # 由于依赖库 crypto 是 Release 构建的，因此这里也只能用 Release
-& "$vsPath\Common7\IDE\devenv.com" ${PROJECT_NAME}.sln /Project ${PROJECT_NAME} /Build ${BUILD_TYPE}
+& "$vsPath\Common7\IDE\devenv.com" "${PROJECT_NAME}.sln" /Project ${PROJECT_NAME} /Build ${BUILD_TYPE}

@@ -44,14 +44,14 @@ public:
      * @param plaintext 明文
      * @return 加密后的密文
      */
-    std::string encrypt(std::string plaintext) override;
+    std::string encrypt(std::string plaintext) noexcept override;
 
     /**
      * @brief 对密文进行解密
      * @param ciphertext 密文
      * @return 解密后的明文
      */
-    std::string decrypt(std::string ciphertext) override;
+    std::string decrypt(std::string ciphertext) noexcept override;
 
 };
 
