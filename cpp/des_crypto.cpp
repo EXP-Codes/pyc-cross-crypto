@@ -17,7 +17,7 @@ DESCrypto::DESCrypto(std::string key) {
     this->key = digest.substr(0, DES_EDE2::DEFAULT_KEYLENGTH);
 }
 
-std::string DESCrypto::encrypt(std::string plaintext) noexcept {
+std::string DESCrypto::encrypt(std::string plaintext) NOEXCEPT {
     using namespace CryptoPP;
 
     unsigned char key[DES::DEFAULT_KEYLENGTH];
@@ -51,7 +51,7 @@ std::string DESCrypto::encrypt(std::string plaintext) noexcept {
     return ciphertext;
 }
 
-std::string DESCrypto::decrypt(std::string ciphertext) noexcept {
+std::string DESCrypto::decrypt(std::string ciphertext) NOEXCEPT {
     using namespace CryptoPP;
 
     unsigned char key[DES::DEFAULT_KEYLENGTH];

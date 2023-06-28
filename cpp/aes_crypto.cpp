@@ -22,7 +22,7 @@ AESCrypto::AESCrypto(std::string key, std::string iv) {
     this->iv = std::string((char*)digestIv, SHA256::DIGESTSIZE).substr(0, AES::BLOCKSIZE);
 }
 
-std::string AESCrypto::encrypt(std::string plaintext) noexcept {
+std::string AESCrypto::encrypt(std::string plaintext) NOEXCEPT {
     using namespace CryptoPP;
     CBC_Mode< AES >::Encryption aes;
     aes.SetKeyWithIV((byte*)this->key.c_str(), this->key.size(), (byte*)this->iv.c_str());
@@ -49,7 +49,7 @@ std::string AESCrypto::encrypt(std::string plaintext) noexcept {
     return base64_ciphertext;
 }
 
-std::string AESCrypto::decrypt(std::string ciphertext) noexcept {
+std::string AESCrypto::decrypt(std::string ciphertext) NOEXCEPT {
     using namespace CryptoPP;
     CBC_Mode< AES >::Decryption aes;
     aes.SetKeyWithIV((byte*)this->key.c_str(), this->key.size(), (byte*)this->iv.c_str());

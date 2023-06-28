@@ -51,14 +51,14 @@ public:
      * @param std::string plaintext - 需要加密的明文
      * @return std::string - 加密后的密文
      */
-    std::string encrypt(std::string plaintext) noexcept override;
+    std::string encrypt(std::string plaintext) NOEXCEPT override;
 
     /**
      * @brief AES解密
      * @param std::string ciphertext - 需要解密的密文
      * @return std::string - 解密后的明文
      */
-    std::string decrypt(std::string ciphertext) noexcept override;
+    std::string decrypt(std::string ciphertext) NOEXCEPT override;
 
 };
 
