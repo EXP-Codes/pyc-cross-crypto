@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.10)
 # Set the project name
 project(cpp)
 
+# Ignore the warning
+add_compile_options(-w)
+
 # Add the executable
 add_executable(${PROJECT_NAME} 
     test_crypto.cpp
