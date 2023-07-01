@@ -61,12 +61,10 @@ python 环境直接安装就好， Windows 和 Mac 都是一样的。
     1. `cd cpp`
     2. 编译: `bin/build.ps1`
     3. 执行: `bin/run.ps1`
-- Mac (需要提前安装 g++ 和 cmake): 
-  1. `mkdir -p cpp/build`
-  2. `cd cpp/build`
-  3. 构建: `cmake -DCMAKE_BUILD_TYPE=Release ..`
-  4. 编译: `make`
-  5. 执行: `./cpp`
+- Mac/Linux (需要提前安装 g++ 和 cmake): 
+    1. `cd cpp`
+    2. 编译: `bin/build.sh`
+    3. 执行: `bin/run.sh`
 
 ![](./imgs/test_demo.jpg)
 
