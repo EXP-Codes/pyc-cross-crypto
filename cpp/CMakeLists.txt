@@ -36,5 +36,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/cryptopp)
 
 # Set the library directories and link libraries
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/cryptopp/.vs/build/x64/Linux/libcryptopp.a)
+  elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/cryptopp/.vs/build/x64/Mac/libcryptopp.a)
+  else()
   target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/cryptopp/.vs/build/x64/Release/libcryptopp.a)
+  endif()
 endif()
