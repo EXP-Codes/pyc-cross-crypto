@@ -1,4 +1,5 @@
 #include "file_utils.hpp"
+#include <cstring>
 using namespace std;
 
 /**
