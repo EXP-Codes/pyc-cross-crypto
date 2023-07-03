@@ -41,9 +41,9 @@ int main() {
     string key = args["key"];
     string iv = args["iv"];
 
-    cout << "请选择以下测试模式：" << endl;
-    cout << "1. 交互模式" << endl;
-    cout << "2. 默认模式" << endl;
+    cout << "Please select one of the following test modes:" << endl;
+    cout << "1. Interactive mode" << endl;
+    cout << "2. Default mode" << endl;
     string option;
     cin >> option;
     if (option == "1") {
@@ -82,11 +82,11 @@ map<string, string> load_crypto_args(const string& envpath) {
 
 void interactive(string key, string iv) {
     while (true) {
-        cout << "请选择操作：" << endl;
-        cout << "1. 加密测试" << endl;
-        cout << "2. 解密测试" << endl;
-        cout << "3. 退出" << endl;
-        cout << "请输入选项编号：" << endl;
+        cout << "Please choose an operation:" << endl;
+        cout << "1. Encryption test" << endl;
+        cout << "2. Decryption test" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Please enter the option number:" << endl;
         string option;
         cin >> option;
         if (option == "1") {
@@ -99,40 +99,40 @@ void interactive(string key, string iv) {
             break;
 
         } else {
-            cout << "未知选项，请重新输入！" << endl;
+            cout << "Unknown option, please enter again!" << endl;
         }
     }
 }
 
 
 void encryption_test(string key, string iv) {
-    cout << "请选择加密算法：" << endl;
+    cout << "Please choose an encryption algorithm:" << endl;
     cout << "1. AES" << endl;
     cout << "2. DES" << endl;
-    cout << "请输入选项编号：" << endl;
+    cout << "Please enter the option number:" << endl;
     string algorithm_option;
     cin >> algorithm_option;
 
-    cout << "请选择加密类型：" << endl;
-    cout << "1. 字符串" << endl;
-    cout << "2. 文件" << endl;
-    cout << "请输入选项编号：" << endl;
+    cout << "Please choose the type of encryption:" << endl;
+    cout << "1. String" << endl;
+    cout << "2. File" << endl;
+    cout << "Please enter the option number:" << endl;
     string type_option;
     cin >> type_option;
 
     string data;
     if (type_option == "1") {
-        cout << "请输入要加密的字符串：" << endl;
+        cout << "Please enter the string to be encrypted:" << endl;
         cin >> data;
 
     } else if (type_option == "2") {
-        cout << "请输入要加密的文件路径：" << endl;
+        cout << "Please enter the path of the file to be encrypted:" << endl;
         string filepath;
         cin >> filepath;
         data = file_read(filepath);
 
     } else {
-        cout << "未知选项，返回主菜单！" << endl;
+        cout << "Unknown option, returning to main menu!" << endl;
         return;
     }
 
@@ -143,42 +143,42 @@ void encryption_test(string key, string iv) {
     if (type_option == "2") {
         string cipherfile = OUT_DIR + "/" + name + "_ciphertext.cro";
         file_write(cipherfile, ciphertext);
-        cout << "[" << name << "] 已加密: " << cipherfile << endl << endl;
+        cout << "[" << name << "] Encrypted: " << cipherfile << endl << endl;
         
     } else {
-        cout << "[" << name << "] 密文: " << ciphertext << endl << endl;
+        cout << "[" << name << "] Encrypted: " << ciphertext << endl << endl;
     }
 }
 
 
 void decryption_test(string key, string iv) {
-    cout << "请选择解密算法：" << endl;
+    cout << "Please choose a decryption algorithm:" << endl;
     cout << "1. AES" << endl;
     cout << "2. DES" << endl;
-    cout << "请输入选项编号：" << endl;
+    cout << "Please enter the option number:" << endl;
     string algorithm_option;
     cin >> algorithm_option;
 
-    cout << "请选择解密类型：" << endl;
-    cout << "1. 字符串" << endl;
-    cout << "2. 文件" << endl;
-    cout << "请输入选项编号：" << endl;
+    cout << "Please choose the type of decryption:" << endl;
+    cout << "1. String" << endl;
+    cout << "2. File" << endl;
+    cout << "Please enter the option number:" << endl;
     string type_option;
     cin >> type_option;
 
     string data;
     if (type_option == "1") {
-        cout << "请输入要解密的字符串：" << endl;
+        cout << "Please enter the string to be decrypted:" << endl;
         cin >> data;
 
     } else if (type_option == "2") {
-        cout << "请输入要解密的文件路径：" << endl;
+        cout << "Please enter the path of the file to be decrypted:" << endl;
         string filepath;
         cin >> filepath;
         data = file_read(filepath);
 
     } else {
-        cout << "未知选项，返回主菜单！" << endl;
+        cout << "Unknown option, returning to the main menu!" << endl;
         return;
     }
 
@@ -189,10 +189,10 @@ void decryption_test(string key, string iv) {
     if (type_option == "2") {
         string plainfile = OUT_DIR + "/" + name + "_plaintext.txt";
         file_write(plainfile, plaintext);
-        cout << "[" << name << "] 已解密: " << plainfile << endl << endl;
+        cout << "[" << name << "] Decrypted: " << plainfile << endl << endl;
 
     } else {
-        cout << "[" << name << "] 解密: " << plaintext << endl << endl;
+        cout << "[" << name << "] Decrypted: " << plaintext << endl << endl;
     }
 }
 
@@ -221,35 +221,36 @@ void defavlt(string key, string iv) {
 
 
 void test_cache(Crypto* crypto, string type) {
-    cout << "[" << type << "] 测试内存字符串加解密 ..." << endl;
+    cout << "[" << type << "] Testing encryption and decryption in memory..." << endl;
 
     string plaintext = TESTED_PLAINTEXT;
-    cout << "[" << type << "] 明文: " << plaintext << endl;
+    cout << "[" << type << "] Plaintext: " << plaintext << endl;
 
     string ciphertext = crypto->encrypt(plaintext);
-    cout << "[" << type << "] 密文: " << ciphertext << endl;
+    cout << "[" << type << "] Ciphertext: " << ciphertext << endl;
 
     plaintext = crypto->decrypt(ciphertext);
-    cout << "[" << type << "] 解密: " << plaintext << endl;
-    cout << "[" << type << "] 测试完成" << endl << endl;
+    cout << "[" << type << "] Decrypted: " << plaintext << endl;
+    cout << "[" << type << "] Test completed" << endl << endl;
 }
 
 
 void test_file(Crypto* crypto, string type) {
-    cout << "[" << type << "] 测试文件字符串加解密 ..." << endl;
+    cout << "[" << type << "] Testing encryption and decryption on a file..." << endl;
 
     string plaintext = file_read(TESTED_FILEPATH);
-    cout << "[" << type << "] 已读取被测文件: " << TESTED_FILEPATH << endl;
+    cout << "[" << type << "] File read for testing: " << TESTED_FILEPATH << endl;
 
     string cipherfile = OUT_DIR + "/" + type + "_ciphertext.cro";
     string ciphertext = crypto->encrypt(plaintext);
     file_write(cipherfile, ciphertext);
-    cout << "[" << type << "] 已加密: " << cipherfile << endl;
+    cout << "[" << type << "] Encrypted: " << cipherfile << endl;
 
     string plainfile = OUT_DIR + "/" + type + "_plaintext.txt";
     plaintext = crypto->decrypt(ciphertext);
     file_write(plainfile, plaintext);
-    cout << "[" << type << "] 已解密: " << plainfile << endl;
+    cout << "[" << type << "] Decrypted: " << plainfile << endl;
 
-    cout << "[" << type << "] 测试完成" << endl << endl;
+    cout << "[" << type << "] Test completed" << endl << endl;
 }
+
