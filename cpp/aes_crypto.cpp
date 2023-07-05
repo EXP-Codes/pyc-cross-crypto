@@ -70,7 +70,7 @@ std::string AESCrypto::decrypt(std::string ciphertext) NOEXCEPT {
                 new StringSink(paded_plaintext)
             )
         );
-    } catch (const Exception& e) {
+    } catch (const std::exception& e) {
         return FAIL_DECRYPTO;
     }
 
