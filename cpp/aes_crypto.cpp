@@ -71,7 +71,7 @@ std::string AESCrypto::decrypt(std::string ciphertext) NOEXCEPT {
             )
         );
     } catch (const Exception& e) {
-        return "fail to decrypt";
+        return FAIL_DECRYPTO;
     }
 
     // 去除明文的填充字节
